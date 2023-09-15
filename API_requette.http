@@ -1,5 +1,25 @@
-GET http://localhost:3086/BDD_test/logane/lol/1h30/14:20
-
 ###
 
-GET http://localhost:3086/ajouter/hello/tata/toto/yoyo
+GET http://localhost:3086/test HTTP/1.1
+content-type: application/json
+
+{
+    "api_nom": "tarte poire",
+    "api_img": "tarte_poire.jpeg",
+    "api_duree": "40min",
+    "api_note": "2/5"
+}
+
+###
+POST http://localhost:3086/recettes_save HTTP/1.1
+content-type: application/json
+
+{
+    "api_nom": "logane3",
+    "api_img": ".jpeg",
+    "api_duree": "42 min",
+    "api_note": "4/5"
+}
+
+###
+DELETE http://localhost:3086/recettes_delete/1 HTTP/1.1

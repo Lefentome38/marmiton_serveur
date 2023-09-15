@@ -16,24 +16,25 @@ const sequelize = new Sequelize({
   storage: "./db.sqlite",
 })
 
-const table_recette = sequelize.define("table_recette", {
-  non: {
+const Recette = sequelize.define("Recette", {
+  nom: {
     type: DataTypes.STRING,
   },
-  imag_url: {
+  img_url: {
     type: DataTypes.STRING,
   },
   duree: {
     type: DataTypes.STRING,
   },
   note: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.STRING,
   },
 }, {
   timestamps: false,
 })
 sequelize
-  .sync({ force: true })
+  // .sync({ force: true })
+  .sync()
 
   .catch(error => {
     console.error('Erreur de synchronisation:', error);
@@ -41,23 +42,24 @@ sequelize
 
 
 
-app.get('/ajouter/:api_nom/:api_imag/:api_duree/:api_note', async(req, res) =>{
-  res.send("la liste" + " " + req.params.api_nom + " " + req.params.api_imag + " " + req.params.api_duree + " " + req.params.api_note)
+app.get('/test', async (req, res) =>{
+  res.json("la liste de la recette: " + " " + req.body.api_nom + " " + req.body.api_img + " " + req.body.api_duree + " " + req.body.api_note)
 })
 
-app.get('/BDD_test/:api_nom/:api_imag/:api_duree/:api_note', (req, res) => {
-  BDD()
-  async function BDD() {
-    console.log('La synchronisation a réussi.');
-    table_recette.create({
-      non: req.params.api_nom,
-      imag_url: req.params.api_imag,
-      duree: req.params.api_duree,
-      note: req.params.api_note,
-    })
-}
-    res.send("sauvegarder")
+app.post('/recettes_save', async (req, res) => {
+  const recette_save = await Recette.create({
+    nom: req.body.api_nom,
+    img_url: req.body.api_img,
+    duree: req.body.api_duree,
+    note: req.body.api_note,
+  })
+  res.json(recette_save)
 })
+
+app.delete('/recettes_delete/:id', async (req, res) => {
+  await Recette.destroy({where: {id: req.params.id}})
+  res.send("delete" + req.params.id)
+}) 
 
 // "https://www.marmiton.org/recettes/recette-hasard.aspx?v=2"
 
