@@ -1,1 +1,5 @@
-GET http://localhost:3086/helloo
+GET http://localhost:3086/BDD_test/logane/lol/1h30/14:20
+
+###
+
+GET http://localhost:3086/ajouter/hello/tata/toto/yoyo
